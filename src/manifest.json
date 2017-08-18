@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "CF Helper",
+  "description": "Crossfunding Reseash Helper",
+  "version": "0.1",
+  "icons": { "32": "32.png",
+               "64": "64.png",
+              "128": "128.png" },
+  "permissions": [
+    "http://www.kickstarter.com/*",
+	"https://www.kickstarter.com/*"
+  ],
+  "content_scripts": [
+      {
+        "matches": ["http://www.kickstarter.com/*", "https://www.kickstarter.com/*"],
+        "js": ["main.js", "lib/jquery.min.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      "cf-helper.js"
+    ]
+}
