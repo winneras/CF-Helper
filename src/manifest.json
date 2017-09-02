@@ -14,10 +14,11 @@
   "content_scripts": [
       {
         "matches": ["http://www.kickstarter.com/*", "https://www.kickstarter.com/*"],
-        "js": ["main.js", "lib/jquery.min.js"]
+        "js": ["main.js", "lib/jquery.min.js", "US_States.js"]
       }
     ],
     "web_accessible_resources": [
-      "cf-helper.js"
+      "cf-helper.js",
+      "US_States.js"
     ]
 }
