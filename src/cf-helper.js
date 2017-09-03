@@ -124,7 +124,7 @@ var CFBase = function() {
             dummy.setAttribute("id", "dummy_textarea");
             document.getElementById("dummy_textarea").value = txt;
             dummy.select();
-            dummy.style.position = "absolute";
+            dummy.style.position = "fixed";
             dummy.style.top = "0px";
             dummy.style.zIndex = "999999";
         },
@@ -149,6 +149,14 @@ var CFBase = function() {
             str = str + data.pIsSuccess + "\t";
             str = str + data.pUrl;
             return str;
+        },
+        getNumberFromString: function(str){
+        	return parseInt(str.match(/\d/g).join(""), 10);
+        },
+        getCompleteness: function(amount, target){
+        	amount = this.getNumberFromString(amount);
+        	target = this.getNumberFromString(target);
+        	return amount / target;
         },
         getUsStatesList: function() {
             return {
@@ -229,7 +237,7 @@ KickstarterObj.setName(titleDiv.innerText);
 
 var industryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
 if (industryDiv.length < 2) {
-    industryDiv = jQuery(".NS_projects__category_location");
+    industryDiv = jQuery(".NS_projects__category_location a");
     KickstarterObj.setIndustry(industryDiv[industryDiv.length - 1].innerText);
 } else {
     KickstarterObj.setIndustry(industryDiv[industryDiv.length - 2].innerText);
@@ -237,13 +245,23 @@ if (industryDiv.length < 2) {
 
 
 var targetDiv = jQuery("#content-wrap > section > div > div.grid-row.order-0-md.order-2-lg.mb5-lg.mb0-md > div.col-md-8-24.block-lg.hide > div.NS_campaigns__stats > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span.block.navy-600.type-12.type-14-md.lh3-lg > span.money")[0];
+if(!targetDiv){
+	targetDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb3 > div > span")[0];
+}
 KickstarterObj.setTarget(targetDiv.innerText);
 
 var amountDiv = jQuery("#content-wrap > section > div > div.grid-row.order-0-md.order-2-lg.mb5-lg.mb0-md > div.col-md-8-24.block-lg.hide > div.NS_campaigns__stats > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span.block.green-700.js-pledged.medium.type-16.type-24-md")[0];
+if(!amountDiv){
+	amountDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb3 > h3 > span")[0];
+}
 KickstarterObj.setAmount(amountDiv.innerText);
 
 var completenessDiv = jQuery("#pledged");
-KickstarterObj.setCompleteness(completenessDiv.data("percentRaised"));
+var completenessNo = completenessDiv.data("percentRaised");
+if(!completenessNo){
+	completenessNo = KickstarterObj.getCompleteness(KickstarterObj.data.pAmount, KickstarterObj.data.pTarget);
+}
+KickstarterObj.setCompleteness(completenessNo);
 
 KickstarterObj.setGoalType("fixed");
 
@@ -251,7 +269,7 @@ KickstarterObj.setProductStage("");
 
 var countryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
 if (countryDiv.length < 2) {
-    countryDiv = jQuery(".NS_projects__category_location");
+    countryDiv = jQuery(".NS_projects__category_location a");
     KickstarterObj.setCountry(countryDiv[countryDiv.length - 2].innerText, KickstarterObj.kickstarterCountryHandler);
 } else {
     KickstarterObj.setCountry(countryDiv[countryDiv.length - 1].innerText, KickstarterObj.kickstarterCountryHandler);
@@ -272,7 +290,12 @@ var getTeamSizeAction = function(callback) {
 };
 
 var backersDiv = jQuery("#backers_count");
-KickstarterObj.setBackers(backersDiv.data("backersCount"));
+var backersCountNo = backersDiv.data("backersCount");
+if(!backersCountNo){
+	backersDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb0 > h3")[0];
+	backersCountNo = backersDiv.innerText;
+}
+KickstarterObj.setBackers(backersCountNo);
 
 var descDiv = jQuery(".NS_projects__description_section .full-description")[0];
 KickstarterObj.setWordCount(descDiv.innerText);
