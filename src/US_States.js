@@ -1,4 +1,4 @@
-window.getUsStatesList = function(){
+getUsStatesList = function(){
 	return {
 	    "AL": "Alabama",
 	    "AK": "Alaska",
