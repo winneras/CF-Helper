@@ -1,7 +1,7 @@
-var scripts = ["lib/require.js", "US_States.js", "cf-helper.js"];
+var scripts = ["lib/require.js", "cf-helper.js"];
 var basePath = chrome.runtime.getURL("/");
 var app = {};
-var hostname = window.location.hostname;
+
 var s = document.createElement("script");
     s.type = "text/javascript";
     s.innerHTML = "var basePath = \"" + basePath + "\"";
@@ -15,7 +15,4 @@ app.loadScript = function(scriptName) {
 };
 for (var i = 0; i < scripts.length; i++) {
     app.loadScript(scripts[i]);
-}
-if(hostname.indexOf("kickstarter") > 0){
-  app.loadScript("KickstarterHandler.js");
 }
