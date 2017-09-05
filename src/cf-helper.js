@@ -1,5 +1,8 @@
 jQuery("body").addClass('cf-helper');
-
+require.config({baseUrl: basePath, waitSeconds: 2});
+require(["lib/moment.min"], function(moment){
+	console.log(moment);
+});
 var CFBase = function() {
     return {
         init: function() {},

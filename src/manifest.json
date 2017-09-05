@@ -20,6 +20,8 @@
   "web_accessible_resources": [
     "cf-helper.js",
     "US_States.js",
-    "KickstarterHandler.js"
+    "KickstarterHandler.js",
+    "lib/require.js",
+    "lib/moment.min.js"
   ]
 }
