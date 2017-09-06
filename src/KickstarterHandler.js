@@ -4,10 +4,9 @@ define(["CFBase"], function(CFBase) {
 
         var titleDiv = jQuery("#content-wrap section div div:nth-child(2) div div div:nth-child(3) h2")[0];
         if (titleDiv) {
-            KickstarterObj.setIsSuccess(false);
+            
         } else {
             titleDiv = jQuery("#content-wrap > section > div.project-profile__content > div.NS_project_profile__title > h2 > span > a")[0];
-            KickstarterObj.setIsSuccess(true);
         }
         KickstarterObj.setName(titleDiv.innerText);
 
@@ -42,8 +41,15 @@ define(["CFBase"], function(CFBase) {
         var completenessNo = completenessDiv.data("percentRaised");
         if (!completenessNo) {
             completenessNo = KickstarterObj.getCompleteness(KickstarterObj.data.pAmount, KickstarterObj.data.pTarget);
-        }
+            
+        } 
         KickstarterObj.setCompleteness(completenessNo);
+
+        if(completenessNo > 1){
+            KickstarterObj.setIsSuccess(true);
+        } else {
+            KickstarterObj.setIsSuccess(false);
+        }
 
         KickstarterObj.setGoalType("fixed");
 
