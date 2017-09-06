@@ -28,10 +28,11 @@ define(function() {
             this.data.pIndustry = industry;
         },
         setTarget: function(target) {
+        	target = this.getNumberFromString(target);
             this.data.pTarget = target;
         },
         setAmount: function(amount) {
-            //amount = amount.replace(",", "");
+            amount = this.getNumberFromString(amount);
             this.data.pAmount = amount;
         },
         setCompleteness: function(completeness) {
@@ -109,9 +110,11 @@ define(function() {
         	this.data.pEndDate = endDate;
         },
         setLastDays: function(days){
+        	days = this.getNumberFromString(days);
         	this.data.pLastDays = days;
         },
         addPledge: function(pledgeCost){
+        	pledgeCost = this.getNumberFromString(pledgeCost);
         	this.data.pPledges.push(pledgeCost);
         },
         videoFinder: function(iframes) {
@@ -174,7 +177,10 @@ define(function() {
             return str;
         },
         getNumberFromString: function(str) {
-            return parseInt(str.match(/\d/g).join(""), 10);
+        	if(isNaN(str)){
+        		return parseInt(str.match(/\d/g).join(""), 10);
+        	}
+        	return str;
         },
         getCompleteness: function(amount, target) {
             amount = this.getNumberFromString(amount);

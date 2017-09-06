@@ -30,7 +30,13 @@ define(["CFBase"], function(CFBase) {
         if (!amountDiv) {
             amountDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb3 > h3 > span")[0];
         }
-        KickstarterObj.setAmount(amountDiv.innerText);
+        if(!amountDiv){
+            amountDiv = jQuery("#pledged");
+            KickstarterObj.setAmount(amountDiv.data("pledged"));
+        } else {
+            KickstarterObj.setAmount(amountDiv.innerText);
+        }
+        
 
         var completenessDiv = jQuery("#pledged");
         var completenessNo = completenessDiv.data("percentRaised");
@@ -83,6 +89,30 @@ define(["CFBase"], function(CFBase) {
         KickstarterObj.setReviewCount(commentsDiv.data("value"));
 
         var getPublishTimeAction = function(callback) {
+            var startDateDom = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p > time:nth-child(1)");
+            var endDateDom = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p > time:nth-child(2)");
+            if(startDateDom[0]){
+                KickstarterObj.setPublishTime(startDateDom[0].innerText);
+            }
+            if(endDateDom[0]){
+                KickstarterObj.setEndDate(endDateDom[0].innerText);
+            }
+            var lastDaysDom  = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p");
+            if(lastDaysDom[0]){
+                var str = lastDaysDom[0].innerText;
+                var idxS = str.indexOf("(");
+                var idxE = str.indexOf(")");
+                str = str.substring(idxS, idxE);
+                KickstarterObj.setLastDays(parseInt(str.match(/\d/g).join(""), 10));
+            }
+            if(startDateDom[0]){
+                if (callback) {
+                    callback();
+                }
+                console.log(KickstarterObj.data);
+                KickstarterObj.copyToClip();
+                return;
+            }
             var updateLink = jQuery("#content-wrap > div.NS_projects__content > div > div > div > div.project-nav__links > a.js-load-project-content.js-load-project-updates.mx3.project-nav__link--updates.tabbed-nav__link.type-14");
             updateLink.click();
             window.setTimeout(function() {
@@ -105,6 +135,16 @@ define(["CFBase"], function(CFBase) {
 
         KickstarterObj.setUrl();
 
+        var getAllPledges = function(){
+            var pledgesDom = jQuery("#content-wrap .NS_projects__rewards_list.js-project-rewards ol li div.pledge__info span.money");
+            var i = 0;
+            var str;
+            for(i = 0; i < pledgesDom.length; i++){
+                str = pledgesDom[i].innerText;
+                KickstarterObj.addPledge(parseInt(str.match(/\d/g).join(""), 10));
+            }
+        };
+        getAllPledges();
         getDeliveryTimeAction();
         getTeamSizeAction(getPublishTimeAction);
     };
