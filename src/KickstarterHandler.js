@@ -24,6 +24,7 @@ define(["CFBase"], function(CFBase) {
             targetDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb3 > div > span")[0];
         }
         KickstarterObj.setTarget(targetDiv.innerText);
+        KickstarterObj.setCurrency(targetDiv.innerText);
 
         var amountDiv = jQuery("#content-wrap > section > div > div.grid-row.order-0-md.order-2-lg.mb5-lg.mb0-md > div.col-md-8-24.block-lg.hide > div.NS_campaigns__stats > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span.block.green-700.js-pledged.medium.type-16.type-24-md")[0];
         if (!amountDiv) {

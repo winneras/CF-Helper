@@ -3,6 +3,7 @@ define(function() {
         data: {
             pName: "", // project name
             pIndustry: "", //project industry
+            pCurrency: "", // currency
             pTarget: 0, // project funding target
             pAmount: 0, // actual funded amount
             pCompleteness: 0, // precentage from 0 to 1
@@ -26,6 +27,17 @@ define(function() {
         setName: function(name) { this.data.pName = name; },
         setIndustry: function(industry) {
             this.data.pIndustry = industry;
+        },
+        setCurrency: function(str){
+        	var i = 0;
+        	var idx;
+        	for(i = 0; i<str.length; i++){
+        		if(!isNaN(str[i])){
+        			idx = i;
+        			break;
+        		}
+        	}
+        	this.data.pCurrency = str.substr(0, idx);
         },
         setTarget: function(target) {
         	target = this.getNumberFromString(target);
@@ -145,6 +157,7 @@ define(function() {
             var i = 0;
             var str = data.pName + "\t";
             str = str + data.pIndustry + "\t";
+            str = str + data.pCurrency + "\t";
             str = str + data.pTarget + "\t";
             str = str + data.pAmount + "\t";
             str = str + data.pCompleteness + "\t";
