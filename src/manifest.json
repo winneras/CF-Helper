@@ -14,13 +14,19 @@
     "https://www.kickstarter.com/*"
   ],
   "content_scripts": [{
-    "matches": ["http://www.kickstarter.com/*", "https://www.kickstarter.com/*"],
+    "matches": [
+      "http://www.kickstarter.com/*", 
+      "https://www.kickstarter.com/*",
+      "https://www.indiegogo.com/*",
+      "http://www.indiegogo.com/*"
+    ],
     "js": ["main.js"]
   }],
   "web_accessible_resources": [
     "cf-helper.js",
     "CFBase.js",
     "KickstarterHandler.js",
+    "IndiegogoHandler.js",
     "lib/require.js",
     "lib/moment.min.js"
   ]
