@@ -107,7 +107,7 @@ define(function() {
             this.data.pReviewCount = count;
         },
         setPublishTime: function(time, inputFormat) {
-            this.data.pPublishTime = time;
+        	this.data.pPublishTime = time;
         },
         setDeliveryTime: function(time, inputFormat) {
             this.data.pDeliveryTime = time;

@@ -1,4 +1,4 @@
-define(["CFBase"], function(CFBase) {
+define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
     return function() {
         var indiegogoObj = CFBase;
 
@@ -69,6 +69,107 @@ define(["CFBase"], function(CFBase) {
             return str.trim();
         };
         indiegogoObj.setCountry(getCountry());
+
+        var setTeamSize = function(callback){
+        	var doms;
+        	var link = jQuery("body campaign-header-basics div.campaignHeaderBasics-assurance > campaign-header-trust > div > purchasable-trust > div > div > div.campaignTrust-detailsLinks > a");
+        	link.click();
+        	window.setTimeout(function(){
+        		doms = jQuery("body campaign-modal div.campaignTrustInfo-sectionContent div.campaignTrustInfo-campaigner");
+        		indiegogoObj.setTeamSize(doms.length + 1);
+        		if(callback){
+        			callback();
+        		}
+        		jQuery("body div.modal campaign-modal div.campaignTrustModal-header > a").click();
+        	}, 1000);
+        };
+        
+
+        var getBackers = function(){
+        	var dom = jQuery("body > div.ng-scope > div > div > campaign-page > div > div > campaign-header-basics > div > div.campaignHeaderBasics-goalProgress > div > campaign-goal-progress > div > div.campaignGoalProgress-raised.ng-binding > span:nth-child(2)")[0];
+        	if(!dom){
+        		dom = jQuery("body campaign-page campaign-header-basics div.campaignHeaderBasics-goalProgress campaign-goal-progress div.campaignGoalProgress-raised span:nth-child(2)")[0];
+        	}
+        	var num = indiegogoObj.getNumberFromString(dom.innerText);
+        	return num;
+        };
+        indiegogoObj.setBackers(getBackers());
+
+        var getDescription = function(){
+        	var dom = jQuery("#campaignDescription");
+        	return dom[0].innerText;
+        };
+        indiegogoObj.setWordCount(getDescription());
+
+        var getVideos = function(){
+        	var iframes = jQuery("iframe");
+        	var videos = jQuery("video");
+        	return videos.length + indiegogoObj.videoFinder(iframes);
+        };
+        indiegogoObj.setVideoCount(getVideos());
+
+        var getReviews = function(){
+        	var dom = jQuery("body campaign-page campaign-body div.campaignBody-leadSection > campaign-navigation > tab-navigation > div > ul > li:nth-child(3) > a")[0];
+        	str = dom.innerText;
+        	return indiegogoObj.getNumberFromString(str);
+
+        };
+        indiegogoObj.setReviewCount(getReviews());
+
+        var getPublishDate = function(){
+        	var dateStr = userGon.data_layer.campaign_start_date;
+        	return moment(dateStr).format("DD/MM/YYYY");
+        };
+        indiegogoObj.setPublishTime(getPublishDate());
+
+        var getDeliveryDate = function(){
+        	var dateStr = userGon.data_layer.estimated_delivery_date;
+        	return moment(dateStr).format("DD/MM/YYYY");
+        };
+        indiegogoObj.setDeliveryTime(getDeliveryDate());
+
+
+        var setIsSuccess = function(){
+        	var is = false;
+        	if(indiegogoObj.data.pCompleteness > 1){
+        		is = true;
+        	}
+        	indiegogoObj.setIsSuccess(is);
+        };
+        setIsSuccess();
+
+        indiegogoObj.setUrl();
+
+        var getEndDate = function(){
+        	var dateStr = userGon.data_layer.campaign_end_date;
+        	return moment(dateStr).format("DD/MM/YYYY");
+        };
+        indiegogoObj.setEndDate(getEndDate());
+
+        var getLastDays = function(){
+        	var start = moment(userGon.data_layer.campaign_start_date);
+        	var end = moment(userGon.data_layer.campaign_end_date);
+        	var diff = end - start;
+        	return Math.ceil(diff/(24*60*60*1000));
+        };
+
+        indiegogoObj.setLastDays(getLastDays());
+
+        var getAllPledges = function(){
+            var pledgesDom = jQuery("campaign-page campaign-body campaign-perks > div campaign-next-perk div.campaignNextPerk-amount");
+            var i = 0;
+            var str;
+            var length = pledgesDom.length / 2;
+            for(i = 0; i < length; i++){
+                str = pledgesDom[i].innerText;
+                indiegogoObj.addPledge(parseInt(str.match(/\d/g).join(""), 10));
+            }
+        };
+        getAllPledges();
+
+        setTeamSize(function(){
+        	indiegogoObj.copyToClip();
+        });
         console.log(indiegogoObj.data);
     };
 });
