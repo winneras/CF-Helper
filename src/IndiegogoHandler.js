@@ -96,7 +96,7 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
         indiegogoObj.setBackers(getBackers());
 
         var getDescription = function(){
-        	var dom = jQuery("#campaignDescription");
+        	var dom = jQuery(".campaignBody-leadSection");
         	return dom[0].innerText;
         };
         indiegogoObj.setWordCount(getDescription());
