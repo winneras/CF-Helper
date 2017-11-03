@@ -11,14 +11,20 @@
   },
   "permissions": [
     "http://www.kickstarter.com/*",
-    "https://www.kickstarter.com/*"
+    "https://www.kickstarter.com/*",
+    "https://www.indiegogo.com/*",
+    "http://www.indiegogo.com/*",
+    "http://www.zhongchou.com/*",
+    "https://www.zhongchou.com/*"
   ],
   "content_scripts": [{
     "matches": [
       "http://www.kickstarter.com/*", 
       "https://www.kickstarter.com/*",
       "https://www.indiegogo.com/*",
-      "http://www.indiegogo.com/*"
+      "http://www.indiegogo.com/*",
+      "http://www.zhongchou.com/*",
+      "https://www.zhongchou.com/*"
     ],
     "js": ["main.js"]
   }],
@@ -27,6 +33,7 @@
     "CFBase.js",
     "KickstarterHandler.js",
     "IndiegogoHandler.js",
+    "ZhongChouHandler.js",
     "lib/require.js",
     "lib/moment.min.js"
   ]

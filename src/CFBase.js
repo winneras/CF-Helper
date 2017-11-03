@@ -20,7 +20,7 @@ define(function() {
             pDeliveryTime: "", //Date() if possible,dd-mm-yyyy estimated delivery time
             pIsSuccess: false, // is funding successful
             pUrl: "", // project url
-            pEndDate: "",//Date() if possible,
+            pEndDate: "", //Date() if possible,
             pLastDays: 0, //last days
             pPledges: [] // pledges money as int
         },
@@ -28,19 +28,19 @@ define(function() {
         setIndustry: function(industry) {
             this.data.pIndustry = industry;
         },
-        setCurrency: function(str){
-        	var i = 0;
-        	var idx;
-        	for(i = 0; i<str.length; i++){
-        		if(!isNaN(str[i])){
-        			idx = i;
-        			break;
-        		}
-        	}
-        	this.data.pCurrency = str.substr(0, idx);
+        setCurrency: function(str) {
+            var i = 0;
+            var idx;
+            for (i = 0; i < str.length; i++) {
+                if (!isNaN(str[i])) {
+                    idx = i;
+                    break;
+                }
+            }
+            this.data.pCurrency = str.substr(0, idx);
         },
         setTarget: function(target) {
-        	target = this.getNumberFromString(target);
+            target = this.getNumberFromString(target);
             this.data.pTarget = target;
         },
         setAmount: function(amount) {
@@ -87,13 +87,42 @@ define(function() {
             this.data.pBackers = number;
         },
         setWordCount: function(content, mode) {
-            var stringArry;
             var count;
+
+            var countChinese = function(str) {
+                var charCodeP, charCodeC, charCodeN;
+                var i = 0;
+                var chineseChars = "",
+                    westernChars = "";
+                for (i = 0; i < str.length; i++) {
+                    charCodeC = str.charCodeAt(i);
+                    if (charCodeC > 32) {
+                        if (charCodeC < 128) {
+                            if (i > 0) {
+                                charCodeP = str.charCodeAt(i - 1);
+                                if (westernChars.length > 1 && westernChars[westernChars.length - 1] !== " " && charCodeP >= 128) {
+                                    westernChars = westernChars + " ";
+                                }
+                            }
+                            westernChars = westernChars + str[i];
+                        } else {
+                            chineseChars = chineseChars + str[i];
+                        }
+                    }
+
+                }
+                return chineseChars.length + countWestern(westernChars);
+            };
+            var countWestern = function(str) {
+                var stringArry;
+                stringArry = str.split(" ");
+                return stringArry.length;
+            };
             if (mode == "zh") {
-                count = content.length();
+                count = countChinese(content);
+
             } else {
-                stringArry = content.split(" ");
-                count = stringArry.length;
+                count = countWestern(content);
             }
             this.data.pWordCount = count;
         },
@@ -107,7 +136,7 @@ define(function() {
             this.data.pReviewCount = count;
         },
         setPublishTime: function(time, inputFormat) {
-        	this.data.pPublishTime = time;
+            this.data.pPublishTime = time;
         },
         setDeliveryTime: function(time, inputFormat) {
             this.data.pDeliveryTime = time;
@@ -118,16 +147,16 @@ define(function() {
         setUrl: function() {
             this.data.pUrl = window.location.href;
         },
-        setEndDate: function(endDate){
-        	this.data.pEndDate = endDate;
+        setEndDate: function(endDate) {
+            this.data.pEndDate = endDate;
         },
-        setLastDays: function(days){
-        	days = this.getNumberFromString(days);
-        	this.data.pLastDays = days;
+        setLastDays: function(days) {
+            days = this.getNumberFromString(days);
+            this.data.pLastDays = days;
         },
-        addPledge: function(pledgeCost){
-        	pledgeCost = this.getNumberFromString(pledgeCost);
-        	this.data.pPledges.push(pledgeCost);
+        addPledge: function(pledgeCost) {
+            pledgeCost = this.getNumberFromString(pledgeCost);
+            this.data.pPledges.push(pledgeCost);
         },
         videoFinder: function(iframes) {
             var i = 0;
@@ -176,24 +205,32 @@ define(function() {
             str = str + data.pDeliveryTime + "\t";
             str = str + data.pIsSuccess + "\t";
             str = str + data.pUrl + "\t ";
-            if(!data.pPledges.length){
-            	return str;
+            if (!data.pPledges.length) {
+                return str;
             } else {
-            	str = str + "\t";
+                str = str + "\t";
             }
-            for(i = 0; i < data.pPledges.length; i++){
-            	str = str + data.pPledges[i];
-            	if(i !== data.pPledges.length - 1){
-            		str = str + "\t";
-            	}
+            for (i = 0; i < data.pPledges.length; i++) {
+                str = str + data.pPledges[i];
+                if (i !== data.pPledges.length - 1) {
+                    str = str + "\t";
+                }
             }
             return str;
         },
         getNumberFromString: function(str) {
-        	if(isNaN(str)){
-        		return parseInt(str.match(/\d/g).join(""), 10);
-        	}
-        	return str;
+            var v = 0;
+            try {
+                if (isNaN(str)) {
+                    v = parseInt(str.match(/\d/g).join(""), 10);
+                } else {
+                    v = str;
+                }
+            } catch (e) {
+            	v = 0;
+            }
+
+            return v;
         },
         getCompleteness: function(amount, target) {
             amount = this.getNumberFromString(amount);
