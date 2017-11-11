@@ -68,14 +68,17 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
                 idx;
             var str = "";
             var today = new Date(new Date().setHours(23, 59, 59, 999));
-            var before120 = new Date(today.getTime() - 120 * dayInMilliseconds);
+            var before730 = new Date(today.getTime() - 730 * dayInMilliseconds);
             for (i = 0; i < imgDoms.length; i++) {
                 str = imgDoms[i].src;
+                if(str === ""){
+                    str = imgDoms[i].dataset.src;
+                }
                 idx = str.indexOf('ncfstatic.com/attachment/');
                 if (idx > 0) {
                     str = str.substr(idx + 25, 9);
                     date = moment(str, "YYYYMM/DD");
-                    if (date._d > before120 && date._d < today) {
+                    if (date._d > before730 && date._d < today) {
                         dates.push(new Date(date._d));
                     }
                 }
