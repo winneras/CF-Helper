@@ -180,6 +180,7 @@ define(function() {
             dummy.style.position = "fixed";
             dummy.style.top = "0px";
             dummy.style.zIndex = "999999";
+            dummy.style.width = "100%";
         },
         createTxtFromData: function() {
             var data = this.data;
