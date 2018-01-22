@@ -20,8 +20,12 @@ define(["CFBase"], function(CFBase) {
 
 
         var targetDiv = jQuery("#content-wrap > section > div > div.grid-row.order-0-md.order-2-lg.mb5-lg.mb0-md > div.col-md-8-24.block-lg.hide > div.NS_campaigns__stats > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span.block.navy-600.type-12.type-14-md.lh3-lg > span.money")[0];
+
         if (!targetDiv) {
             targetDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb3 > div > span")[0];
+        }
+        if(!targetDiv){
+            targetDiv = jQuery("#content-wrap section.js-project-content.js-project-description-content.project-content .description-container div > span.money")[0];
         }
         KickstarterObj.setTarget(targetDiv.innerText);
         KickstarterObj.setCurrency(targetDiv.innerText);
@@ -82,7 +86,11 @@ define(["CFBase"], function(CFBase) {
         var backersCountNo = backersDiv.data("backersCount");
         if (!backersCountNo) {
             backersDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left > div.mb0 > h3")[0];
-            backersCountNo = backersDiv.innerText;
+            backersCountNo = backersDiv ? backersDiv.innerText : void 0;
+        }
+        if(backersCountNo === void 0){
+            backersDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-project-content.js-project-description-content.project-content .description-container > div:nth-child(1) > div.row > div.col-right.border-left > div.mb0 > h3")[0];
+            backersCountNo = backersDiv ? backersDiv.innerText : null;
         }
         KickstarterObj.setBackers(backersCountNo);
 
