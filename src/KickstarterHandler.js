@@ -8,7 +8,10 @@ define(["CFBase"], function(CFBase) {
         } else {
             titleDiv = jQuery("#content-wrap > section > div.project-profile__content > div.NS_project_profile__title > h2 > span > a")[0];
         }
-        KickstarterObj.setName(titleDiv.innerText);
+        if(titleDiv){
+            KickstarterObj.setName(titleDiv.innerText);
+        }
+        
 
         var industryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
         if (industryDiv.length < 2) {
@@ -94,7 +97,7 @@ define(["CFBase"], function(CFBase) {
         }
         KickstarterObj.setBackers(backersCountNo);
 
-        var descDiv = jQuery(".NS_projects__description_section .full-description")[0];
+        var descDiv = jQuery(".full-description.js-full-description")[0];
         KickstarterObj.setWordCount(descDiv.innerText);
 
         var videos = jQuery("video");
