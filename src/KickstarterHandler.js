@@ -112,6 +112,13 @@ define(["CFBase"], function(CFBase) {
         var getPublishTimeAction = function(callback) {
             var startDateDom = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p > time:nth-child(1)");
             var endDateDom = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p > time:nth-child(2)");
+            if(!startDateDom[0]){
+                startDateDom = jQuery("#content-wrap > div.NS_projects__content.pt11 > section.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p > time:nth-child(1)");
+            }
+            if(!endDateDom[0]){
+                endDateDom = jQuery("#content-wrap > div.NS_projects__content.pt11 > section.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p > time:nth-child(2)");
+            }
+
             if(startDateDom[0]){
                 KickstarterObj.setPublishTime(startDateDom[0].innerText);
             }
@@ -119,6 +126,9 @@ define(["CFBase"], function(CFBase) {
                 KickstarterObj.setEndDate(endDateDom[0].innerText);
             }
             var lastDaysDom  = jQuery("#content-wrap > div.NS_projects__content > section.js-could-have-report-project.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p");
+            if(!lastDaysDom[0]){
+                lastDaysDom  = jQuery("#content-wrap > div.NS_projects__content.pt11 > section.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-4 > div.NS_campaigns__funding_period > p");
+            }
             if(lastDaysDom[0]){
                 var str = lastDaysDom[0].innerText;
                 var idxS = str.indexOf("(");
