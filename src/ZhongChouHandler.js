@@ -74,9 +74,9 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
                 if(str === ""){
                     str = imgDoms[i].dataset.src;
                 }
-                idx = str.indexOf('ncfstatic.com/attachment/');
+                idx = str.indexOf('/attachment/');
                 if (idx > 0) {
-                    str = str.substr(idx + 25, 9);
+                    str = str.substr(idx + 12, 9);
                     date = moment(str, "YYYYMM/DD");
                     if (date._d > before730 && date._d < today) {
                         dates.push(new Date(date._d));
@@ -112,6 +112,9 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
 
         var getEndDate = function() {
             var leftDaysDom = jQuery("#jlxqOuterBox > div > div.jlxqBox > div.xqDetailBox > div.xqDetailRight > div.xqRatioOuterBox > div.xqRatioText.clearfix > span.leftSpan > b")[0];
+            if(!leftDaysDom){
+                return;
+            }
             var leftDays = ZhongChouObj.getNumberFromString(leftDaysDom.innerText);
             var today = new Date(new Date().setHours(0, 0, 0, 0));
             var endDate = new Date(today.getTime() + leftDays * 24 * 60 * 60 * 1000);
@@ -124,6 +127,9 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
             ZhongChouObj.setPublishTime(moment.utc(publishDate.toISOString()).format("DD/MM/YYYY"));
 
             endDate = getEndDate();
+            if(!endDate){
+                return;
+            }
             ZhongChouObj.setEndDate(moment.utc(endDate.toISOString()).format("DD/MM/YYYY"));
 
             var lastDays = Math.ceil((endDate.getTime() - publishDate.getTime()) / dayInMilliseconds);
@@ -143,6 +149,9 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
             if (deliveryTimeDom.length > 0) {
                 str = deliveryTimeDom[Math.floor(deliveryTimeDom.length / 2)].innerText;
                 number = ZhongChouObj.getNumberFromString(str);
+            }
+            if(!endDate){
+                return;
             }
             var deliveryDate = new Date(endDate.getTime() + number * dayInMilliseconds);
                 ZhongChouObj.setDeliveryTime(moment.utc(deliveryDate.toISOString()).format("DD/MM/YYYY"));

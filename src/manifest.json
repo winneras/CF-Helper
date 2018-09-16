@@ -15,7 +15,9 @@
     "https://www.indiegogo.com/*",
     "http://www.indiegogo.com/*",
     "http://www.zhongchou.com/*",
-    "https://www.zhongchou.com/*"
+    "https://www.zhongchou.com/*",
+    "http://www.zhongchou.cn/*",
+    "https://www.zhongchou.cn/*"
   ],
   "content_scripts": [{
     "matches": [
@@ -24,7 +26,9 @@
       "https://www.indiegogo.com/*",
       "http://www.indiegogo.com/*",
       "http://www.zhongchou.com/*",
-      "https://www.zhongchou.com/*"
+      "https://www.zhongchou.com/*",
+      "http://www.zhongchou.cn/*",
+      "https://www.zhongchou.cn/*"
     ],
     "js": ["main.js"]
   }],
