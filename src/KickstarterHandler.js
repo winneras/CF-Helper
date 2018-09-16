@@ -8,6 +8,9 @@ define(["CFBase"], function(CFBase) {
         } else {
             titleDiv = jQuery("#content-wrap > section > div.project-profile__content > div.NS_project_profile__title > h2 > span > a")[0];
         }
+        if(!titleDiv){
+            titleDiv = jQuery("#react-project-header > div > div > div.grid-row.pt9-lg.mt3.mt0-lg.mb6-lg.order-2-md.order-1-lg > div > div.grid-row.hide.flex-md.flex-column.flex-row-md.relative > div.col-20-24.block-md.order-2-md.col-lg-15-24 > h2")[0];
+        }
         if(titleDiv){
             KickstarterObj.setName(titleDiv.innerText);
         }
@@ -112,6 +115,11 @@ define(["CFBase"], function(CFBase) {
             backersDiv = jQuery("#content-wrap > div.NS_projects__content > section.js-project-content.js-project-description-content.project-content .description-container > div:nth-child(1) > div.row > div.col-right.border-left > div.mb0 > h3")[0];
             backersCountNo = backersDiv ? backersDiv.innerText : null;
         }
+        if(!backersCountNo){
+            backersDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.hide.block-lg.col-md-8-24 > div.flex.flex-column-lg.mb4.mb5-sm > div.ml5.ml0-lg.mb2-lg > div > span")[0];
+            backersCountNo = backersDiv ? backersDiv.innerText : null;
+        }
+
         KickstarterObj.setBackers(backersCountNo);
 
         var descDiv = jQuery(".full-description.js-full-description")[0];
