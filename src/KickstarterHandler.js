@@ -55,6 +55,9 @@ define(["CFBase"], function(CFBase) {
             amountDiv = jQuery("#content-wrap > div.NS_projects__content.pt11 > section.js-project-content.js-project-description-content.project-content > div > div > div > div > div.col.col-8.description-container > div:nth-child(1) > div.row > div.col-right.col-4.py3.border-left.spotlight-project-video-archive > div.mb3 > h3 > span")[0];
         }
         if(!amountDiv){
+            amountDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.hide.block-lg.col-md-8-24 > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > div.flex.items-center > span > span")[0];
+        }
+        if(!amountDiv){
             amountDiv = jQuery("#pledged");
             KickstarterObj.setAmount(amountDiv.data("pledged"));
         } else {
