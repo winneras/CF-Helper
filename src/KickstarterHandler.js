@@ -18,6 +18,9 @@ define(["CFBase"], function(CFBase) {
 
         var industryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
         if(industryDiv.length === 0){
+            industryDiv = jQuery(".NS_projects__category_location a");
+        }
+        if(industryDiv.length === 0){
             industryDiv = jQuery("#react-project-header > div > div > div.order-1-md.hide-lg.border-top.border-bottom.border-top-none-md.border-none-lg.nested-full-width-xs.nested-full-width-sm.nested-full-width-md.mb4.mb5-sm.mb0-md > div > div > div > a");
         }
         try{
@@ -84,6 +87,9 @@ define(["CFBase"], function(CFBase) {
         KickstarterObj.setProductStage("");
 
         var countryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
+        if(countryDiv.length === 0){
+            countryDiv = jQuery(".NS_projects__category_location a");
+        }
         if(countryDiv.length === 0){
             countryDiv = jQuery("#react-project-header > div > div > div.order-1-md.hide-lg.border-top.border-bottom.border-top-none-md.border-none-lg.nested-full-width-xs.nested-full-width-sm.nested-full-width-md.mb4.mb5-sm.mb0-md > div > div > div > a");
         }
