@@ -13,6 +13,9 @@ app.loadScript = function(scriptName) {
     script.src = basePath + scriptName;
     document.getElementsByTagName("body")[0].appendChild(script);
 };
-for (var i = 0; i < scripts.length; i++) {
-    app.loadScript(scripts[i]);
-}
+window.setTimeout(function(){
+	for (var i = 0; i < scripts.length; i++) {
+    	app.loadScript(scripts[i]);
+	}
+}, 500);
+

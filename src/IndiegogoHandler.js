@@ -25,6 +25,9 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
 
         var getAmount = function() {
             var dom = jQuery("body > div.ng-scope > div > div > campaign-page > div > div > campaign-header-basics > div > div.campaignHeaderBasics-goalProgress > div > campaign-goal-progress > div > div.campaignGoalProgress-raised.ng-binding > span.campaignGoalProgress-raisedAmount.ng-binding")[0];
+            if(!dom){
+                dom = jQuery("#main > campaign-header-basics > div > div.campaignHeaderBasics-goalProgress > campaign-goal-wrapper > div > campaign-goal-progress > div > div.campaignGoalProgress-raised > div.campaignGoalProgress-raisedAmountWrapper.ng-binding > span.campaignGoalProgress-raisedAmount.ng-binding")[0];
+            }
             return dom.innerText;
         };
         indiegogoObj.setCurrency(getAmount());
@@ -110,21 +113,35 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
 
         var getReviews = function(){
         	var dom = jQuery("body campaign-page campaign-body div.campaignBody-leadSection > campaign-navigation > tab-navigation > div > ul > li:nth-child(3) > a")[0];
-        	str = dom.innerText;
+        	if(!dom){
+                dom = jQuery("body > div.ng-scope > div > div > campaign-page > div > campaign-body > div > div.campaignBody-horizontal > div > div.campaignBody-leadSection > campaign-navigation > filter-tabs > div > ul:nth-child(4) > li > filter-tab > div > span")[0];
+            }
+            str = dom.innerText;
         	return indiegogoObj.getNumberFromString(str);
 
         };
         indiegogoObj.setReviewCount(getReviews());
 
         var getPublishDate = function(){
-        	var dateStr = userGon.data_layer.campaign_start_date;
-        	return moment(dateStr).format("DD/MM/YYYY");
+            try{
+                var dateStr = userGon.data_layer.campaign_start_date;
+                return moment(dateStr).format("DD/MM/YYYY");
+            } catch(e) {
+                var dateStr = window.gon.campaign.funding_started_at;
+                return moment(dateStr).format("DD/MM/YYYY");
+            }
+        	
         };
         indiegogoObj.setPublishTime(getPublishDate());
 
         var getDeliveryDate = function(){
-        	var dateStr = userGon.data_layer.estimated_delivery_date;
-        	return moment(dateStr).format("DD/MM/YYYY");
+            try{
+                var dateStr = userGon.data_layer.estimated_delivery_date;
+                return moment(dateStr).format("DD/MM/YYYY");
+            } catch(e) {
+                var dateStr = window.gon.perks.estimated_delivery_date;
+                return moment(dateStr).format("DD/MM/YYYY");
+            }
         };
         indiegogoObj.setDeliveryTime(getDeliveryDate());
 
@@ -141,14 +158,26 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
         indiegogoObj.setUrl();
 
         var getEndDate = function(){
-        	var dateStr = userGon.data_layer.campaign_end_date;
-        	return moment(dateStr).format("DD/MM/YYYY");
+            try{
+                var dateStr = userGon.data_layer.campaign_end_date;
+                return moment(dateStr).format("DD/MM/YYYY");
+            } catch(e) {
+                var dateStr = window.gon.campaign.funding_ends_at;
+                return moment(dateStr).format("DD/MM/YYYY");
+            }
         };
         indiegogoObj.setEndDate(getEndDate());
 
         var getLastDays = function(){
-        	var start = moment(userGon.data_layer.campaign_start_date);
-        	var end = moment(userGon.data_layer.campaign_end_date);
+            var start, end;
+            try{
+                start = moment(userGon.data_layer.campaign_start_date);
+                end = moment(userGon.data_layer.campaign_end_date);
+            } catch(e){
+                start = moment(window.gon.campaign.funding_started_at);
+                end = moment(window.gon.campaign.funding_ends_at);
+            }
+        	
         	var diff = end - start;
         	return Math.ceil(diff/(24*60*60*1000));
         };
