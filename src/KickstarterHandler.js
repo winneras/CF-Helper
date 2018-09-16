@@ -14,12 +14,18 @@ define(["CFBase"], function(CFBase) {
         
 
         var industryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
-        if (industryDiv.length < 2) {
-            industryDiv = jQuery(".NS_projects__category_location a");
-            KickstarterObj.setIndustry(industryDiv[industryDiv.length - 1].innerText);
-        } else {
-            KickstarterObj.setIndustry(industryDiv[industryDiv.length - 2].innerText);
+        try{
+            if (industryDiv.length < 2) {
+                industryDiv = jQuery(".NS_projects__category_location a");
+                KickstarterObj.setIndustry(industryDiv[industryDiv.length - 1].innerText);
+            } else {
+                KickstarterObj.setIndustry(industryDiv[industryDiv.length - 2].innerText);
+            }
+        } catch(e){
+            industryDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.col-lg-16-24 > div.hide.block-lg > div > div > div > div > a:nth-child(1) > span");
+            KickstarterObj.setIndustry(industryDiv[0].innerText)
         }
+        
 
 
         var targetDiv = jQuery("#content-wrap > section > div > div.grid-row.order-0-md.order-2-lg.mb5-lg.mb0-md > div.col-md-8-24.block-lg.hide > div.NS_campaigns__stats > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span.block.navy-600.type-12.type-14-md.lh3-lg > span.money")[0];
@@ -29,6 +35,9 @@ define(["CFBase"], function(CFBase) {
         }
         if(!targetDiv){
             targetDiv = jQuery("#content-wrap section.js-project-content.js-project-description-content.project-content .description-container div > span.money")[0];
+        }
+        if(!targetDiv){
+            targetDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.hide.block-lg.col-md-8-24 > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span > span.inline-block-sm.hide > span")[0];
         }
         KickstarterObj.setTarget(targetDiv.innerText);
         KickstarterObj.setCurrency(targetDiv.innerText);
@@ -67,11 +76,16 @@ define(["CFBase"], function(CFBase) {
         KickstarterObj.setProductStage("");
 
         var countryDiv = jQuery("#content-wrap section .block-lg > .NS_projects__badges.mb3 a");
-        if (countryDiv.length < 2) {
-            countryDiv = jQuery(".NS_projects__category_location a");
-            KickstarterObj.setCountry(countryDiv[countryDiv.length - 2].innerText, KickstarterObj.kickstarterCountryHandler);
-        } else {
-            KickstarterObj.setCountry(countryDiv[countryDiv.length - 1].innerText, KickstarterObj.kickstarterCountryHandler);
+        try{
+            if (countryDiv.length < 2) {
+                countryDiv = jQuery(".NS_projects__category_location a");
+                KickstarterObj.setCountry(countryDiv[countryDiv.length - 2].innerText, KickstarterObj.kickstarterCountryHandler);
+            } else {
+                KickstarterObj.setCountry(countryDiv[countryDiv.length - 1].innerText, KickstarterObj.kickstarterCountryHandler);
+            }
+        } catch(e){
+            countryDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.col-lg-16-24 > div.hide.block-lg > div > div > div > div > a:nth-child(2) > span");
+            KickstarterObj.setCountry(countryDiv[0].innerText, KickstarterObj.kickstarterCountryHandler);
         }
 
 
