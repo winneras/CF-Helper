@@ -94,6 +94,10 @@ define(["lib/moment.min", "CFBase"], function(moment, CFBase) {
         		dom = jQuery("body campaign-page campaign-header-basics div.campaignHeaderBasics-goalProgress campaign-goal-progress div.campaignGoalProgress-raised span:nth-child(2)")[0];
         	}
         	var num = indiegogoObj.getNumberFromString(dom.innerText);
+            if(num === 0){
+                dom = jQuery("body campaign-page campaign-header-basics div.campaignHeaderBasics-goalProgress campaign-goal-progress div.campaignGoalProgress-raised span.campaignGoalProgress-backersCountText")[0];
+            }
+            num = indiegogoObj.getNumberFromString(dom.innerText);
         	return num;
         };
         indiegogoObj.setBackers(getBackers());
