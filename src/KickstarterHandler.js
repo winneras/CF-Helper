@@ -140,6 +140,10 @@ define(["CFBase"], function(CFBase) {
             backersDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.hide.block-lg.col-md-8-24 > div.flex.flex-column-lg.mb4.mb5-sm > div.ml5.ml0-lg.mb2-lg > div > span")[0];
             backersCountNo = backersDiv ? backersDiv.innerText : null;
         }
+        if(!backersCountNo){
+            backersDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.grid-col-12.grid-col-4-md.hide.block-lg > div.flex.flex-column-lg.mb4.mb5-sm > div.ml5.ml0-lg.mb2-lg > div > span")[0];
+            backersCountNo = backersDiv ? backersDiv.innerText : null;
+        }
 
         KickstarterObj.setBackers(backersCountNo);
 
