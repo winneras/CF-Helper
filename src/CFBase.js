@@ -25,7 +25,7 @@ define(function() {
             pPledges: [], // pledges money as int
             pFacebookConnected: false,
             pBacked: 0,
-            pProjects: 0
+            pProjects: 1
 
         },
         setName: function(name) { this.data.pName = name; },
@@ -165,7 +165,8 @@ define(function() {
             this.data.pBacked = this.getNumberFromString(backedNumber);
         },
         setProjects: function(projectNumber){
-            this.data.pProjects = this.getNumberFromString(projectNumber);
+            var num = this.getNumberFromString(projectNumber);
+            this.data.pProjects = num === 0 ? 1 : num;
         },
         addPledge: function(pledgeCost) {
             pledgeCost = this.getNumberFromString(pledgeCost);
