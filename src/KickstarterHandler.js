@@ -220,6 +220,9 @@ define(["CFBase"], function(CFBase) {
         };
         var getProfileAction = function(callback) {
             var profileIco = jQuery("#react-project-header > div > div > div.grid-row.pt9-lg.mt3.mt0-lg.mb6-lg.order-2-md.order-1-lg > div > div.grid-row.hide.flex-md.flex-column.flex-row-md.relative > div.grid-col-12.grid-col-11-sm.grid-col-2-md.flex.items-center.flex-column-md.items-start-md.mb3.order-2-md > a > img");
+            if(!profileIco[0]){
+                profileIco = jQuery("#content-wrap > section > div.project-profile__content > div.grid-container.pb3.pb10-sm > div > div.grid-col-12.grid-col-4-lg > div.NS_projects__creator_spotlight.mobile-center > div.flag > div.flag-body > div > div.creator-name > div.mobile-hide > a");
+            }
             window.setTimeout(function(){
 
 
@@ -228,6 +231,9 @@ define(["CFBase"], function(CFBase) {
                     var facebook = jQuery("#react-project-header > div > div > div:nth-child(8) > div > div > div.grid-container-full.absolute.w100p > div > div > div > div > div > div.shadow-low.bg-white.p4.max-h80vh.auto-scroll-y.clip > div > div.flex.flex-column.flex-row-lg.flex-wrap.mb6 > div.flex-1.mr3 > div > div:nth-child(3) > span");
                     var connected = false;
                     facebook = facebook[0];
+                    if(!facebook){
+                        facebook = jQuery("#bio > div > div.creator-bio-details.col.col-4.pt3.pb3.pb10-sm > div.facebook.py2.border-bottom.f5")[0];
+                    }
                     if(facebook && facebook.innerText){
                         if(facebook.innerText.indexOf("Not")< 0){
                             connected = true;
@@ -237,6 +243,9 @@ define(["CFBase"], function(CFBase) {
 
                     var backed = jQuery("#react-project-header > div > div > div:nth-child(8) > div > div > div.grid-container-full.absolute.w100p > div > div > div > div > div > div.shadow-low.bg-white.p4.max-h80vh.auto-scroll-y.clip > div > div.flex.flex-column.flex-row-lg.flex-wrap.mb6 > div.flex-1.mr3 > div > div:nth-child(4) > span > a");
                     backed = backed[0];
+                    if(!backed){
+                        backed = jQuery("#bio > div > div.creator-bio-details.col.col-4.pt3.pb3.pb10-sm > div.created-projects.py2.f5.mb3 > a:nth-child(4)")[0];
+                    }
                     if(backed && backed.innerText){
                         KickstarterObj.setBacked(backed.innerText);
                     }
@@ -247,6 +256,13 @@ define(["CFBase"], function(CFBase) {
                         teamCount = teamCount + team.length;
                     }
                     KickstarterObj.setTeamSize(teamCount);
+
+                    var projects = jQuery("#bio > div > div.creator-bio-details.col.col-4.pt3.pb3.pb10-sm > div.created-projects.py2.f5.mb3 > a:nth-child(2)");
+                    projects = projects[0];
+
+                    if(projects){
+                        KickstarterObj.setProjects(projects.innerText);
+                    }
                     if(callback){
                         callback();
                     }

@@ -24,7 +24,8 @@ define(function() {
             pLastDays: 0, //last days
             pPledges: [], // pledges money as int
             pFacebookConnected: false,
-            pBacked: 0
+            pBacked: 0,
+            pProjects: 0
 
         },
         setName: function(name) { this.data.pName = name; },
@@ -163,6 +164,9 @@ define(function() {
         setBacked: function(backedNumber){
             this.data.pBacked = this.getNumberFromString(backedNumber);
         },
+        setProjects: function(projectNumber){
+            this.data.pProjects = this.getNumberFromString(projectNumber);
+        },
         addPledge: function(pledgeCost) {
             pledgeCost = this.getNumberFromString(pledgeCost);
             this.data.pPledges.push(pledgeCost);
@@ -215,8 +219,9 @@ define(function() {
             str = str + data.pDeliveryTime + "\t";
             str = str + data.pIsSuccess + "\t";
             str = str + data.pUrl + "\t";
-            str = str + "\t" + data.pFacebookConnected + "\t";
+            str = str + data.pFacebookConnected + "\t";
             str = str + data.pBacked + "\t ";
+            str = str + data.pProjects + "\t ";
 
             if (!data.pPledges.length) {
                 return str;
