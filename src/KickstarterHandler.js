@@ -47,6 +47,9 @@ define(["CFBase"], function(CFBase) {
         if(!targetDiv){
             targetDiv = jQuery("#react-project-header > div > div > div.grid-row.grid-row.mb5-lg.mb0-md.order-0-md.order-2-lg > div.col-full.hide.block-lg.col-md-8-24 > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span > span.inline-block-sm.hide > span")[0];
         }
+        if(!targetDiv){
+            targetDiv = jQuery("#react-project-header > div > div > div:nth-child(3) > div > div.flex.flex-column-lg.mb4.mb5-sm > div:nth-child(1) > span > span.inline-block-sm.hide > span")[0];
+        }
         KickstarterObj.setTarget(targetDiv.innerText);
         KickstarterObj.setCurrency(targetDiv.innerText);
 
