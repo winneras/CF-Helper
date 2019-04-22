@@ -11,6 +11,11 @@ define(["CFBase"], function(CFBase) {
         if(!titleDiv){
             titleDiv = jQuery("#react-project-header > div > div > div.grid-row.pt9-lg.mt3.mt0-lg.mb6-lg.order-2-md.order-1-lg > div > div.grid-row.hide.flex-md.flex-column.flex-row-md.relative > div.col-20-24.block-md.order-2-md.col-lg-15-24 > h2")[0];
         }
+
+        if(!titleDiv){
+            titleDiv = jQuery("#react-project-header > div > div > div.grid-row.pt9-lg.mt3.mt0-lg.mb6-lg.order-2-md.order-1-lg > div > div.grid-row.hide.flex-md.flex-column.flex-row-md.relative > div.grid-col-10.grid-col-7-lg.grid-col-offset-0-md.block-md.order-2-md > h2")[0];
+        }
+
         if(titleDiv){
             KickstarterObj.setName(titleDiv.innerText);
         }
@@ -213,8 +218,44 @@ define(["CFBase"], function(CFBase) {
                 KickstarterObj.addPledge(parseInt(str.match(/\d/g).join(""), 10));
             }
         };
+        var getProfileAction = function(callback) {
+            var profileIco = jQuery("#react-project-header > div > div > div.grid-row.pt9-lg.mt3.mt0-lg.mb6-lg.order-2-md.order-1-lg > div > div.grid-row.hide.flex-md.flex-column.flex-row-md.relative > div.grid-col-12.grid-col-11-sm.grid-col-2-md.flex.items-center.flex-column-md.items-start-md.mb3.order-2-md > a > img");
+            window.setTimeout(function(){
+
+
+                profileIco.click();
+                window.setTimeout(function() {
+                    var facebook = jQuery("#react-project-header > div > div > div:nth-child(8) > div > div > div.grid-container-full.absolute.w100p > div > div > div > div > div > div.shadow-low.bg-white.p4.max-h80vh.auto-scroll-y.clip > div > div.flex.flex-column.flex-row-lg.flex-wrap.mb6 > div.flex-1.mr3 > div > div:nth-child(3) > span");
+                    var connected = false;
+                    facebook = facebook[0];
+                    if(facebook && facebook.innerText){
+                        if(facebook.innerText.indexOf("Not")< 0){
+                            connected = true;
+                        }
+                    }
+                    KickstarterObj.setFacebookConnected(connected);
+
+                    var backed = jQuery("#react-project-header > div > div > div:nth-child(8) > div > div > div.grid-container-full.absolute.w100p > div > div > div > div > div > div.shadow-low.bg-white.p4.max-h80vh.auto-scroll-y.clip > div > div.flex.flex-column.flex-row-lg.flex-wrap.mb6 > div.flex-1.mr3 > div > div:nth-child(4) > span > a");
+                    backed = backed[0];
+                    if(backed && backed.innerText){
+                        KickstarterObj.setBacked(backed.innerText);
+                    }
+
+                    var team = jQuery("#react-project-header > div > div > div:nth-child(8) > div > div > div.grid-container-full.absolute.w100p > div > div > div > div > div > div.shadow-low.bg-white.p4.max-h80vh.auto-scroll-y.clip > div > div:nth-child(4) > div");
+                    var teamCount = 1;
+                    if(team && team.length > 0){
+                        teamCount = teamCount + team.length;
+                    }
+                    KickstarterObj.setTeamSize(teamCount);
+                    if(callback){
+                        callback();
+                    }
+                }, 3000);
+            },3000);
+        };
+
         getAllPledges();
         getDeliveryTimeAction();
-        getTeamSizeAction(getPublishTimeAction);
+        getProfileAction(getPublishTimeAction);
     };
 });

@@ -22,7 +22,10 @@ define(function() {
             pUrl: "", // project url
             pEndDate: "", //Date() if possible,
             pLastDays: 0, //last days
-            pPledges: [] // pledges money as int
+            pPledges: [], // pledges money as int
+            pFacebookConnected: false,
+            pBacked: 0
+
         },
         setName: function(name) { this.data.pName = name; },
         setIndustry: function(industry) {
@@ -154,6 +157,12 @@ define(function() {
             days = this.getNumberFromString(days);
             this.data.pLastDays = days;
         },
+        setFacebookConnected:function(isConnected){
+            this.data.pFacebookConnected = !!isConnected;
+        },
+        setBacked: function(backedNumber){
+            this.data.pBacked = this.getNumberFromString(backedNumber);
+        },
         addPledge: function(pledgeCost) {
             pledgeCost = this.getNumberFromString(pledgeCost);
             this.data.pPledges.push(pledgeCost);
@@ -205,7 +214,10 @@ define(function() {
             str = str + data.pLastDays + "\t";
             str = str + data.pDeliveryTime + "\t";
             str = str + data.pIsSuccess + "\t";
-            str = str + data.pUrl + "\t ";
+            str = str + data.pUrl + "\t";
+            str = str + "\t" + data.pFacebookConnected + "\t";
+            str = str + data.pBacked + "\t ";
+
             if (!data.pPledges.length) {
                 return str;
             } else {
@@ -217,6 +229,9 @@ define(function() {
                     str = str + "\t";
                 }
             }
+            
+            
+
             return str;
         },
         getNumberFromString: function(str) {
